@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/styles">
+        <file>dark.qss</file>
+    </qresource>
+    <qresource prefix="/translations">
+        <file alias="cassette_es_ES.qm">translations/cassette_es_ES.qm</file>
+        <file>translations/cassette_es_LATAM.qm</file>
+    </qresource>
+</RCC>

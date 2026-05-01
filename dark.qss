@@ -1,0 +1,89 @@
+/* style.qss */
+
+/* Ventana principal y etiquetas */
+QMainWindow {
+    background-color: #2b2b2b;
+    color: #e0e0e0;
+}
+
+/* Lista de reproducción */
+QListWidget {
+    background-color: #333333;
+    color: #e0e0e0;
+    border: 1px solid #555555;
+    border-radius: 4px;
+    padding: 4px;
+    outline: none;
+}
+QListWidget::item {
+    padding: 6px;
+    border-bottom: 1px solid #4a4a4a;
+}
+QListWidget::item:selected {
+    background-color: #4a6fa5;
+    color: #ffffff;
+}
+QListWidget::item:hover {
+    background-color: #3e3e3e;
+}
+
+/* Botones genéricos */
+QPushButton {
+    background-color: #2b2b2b;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 6px;
+    padding: 5px;
+    margin: 5px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #5a7a9a;
+}
+QPushButton:pressed {
+    background-color: #3b5b7b;
+}
+QPushButton:checked {
+    background-color: #2b2b2b;;
+}
+
+/* Sliders (barra de progreso y volumen) */
+QSlider::groove:horizontal {
+    background: #4a4a4a;
+    border-radius: 7px;
+}
+QSlider::handle:horizontal {
+    background: #e0e0e0;
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+}
+QSlider::sub-page:horizontal {
+    /* Degradado azul → verde */
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #1e90ff,
+                                stop:0.5 #00bfff,
+                                stop:1 #00fa9a);
+    border-radius: 7px;
+}
+QSlider::handle:horizontal:focus {
+    border: 1px solid #4a9ec8;
+}
+
+/* Label de información de pista */
+QLabel#lbl_track_info {
+    font-size: 16px;
+    font-weight: bold;
+    color: #d0e4ff;
+    padding: 4px;
+}
+
+/* Label de carátula */
+QLabel#lbl_cover {
+    background-color: #333333;
+    border: 1px solid #555555;
+    border-radius: 6px;
+    color: #4a9ec8;
+    font-size: 48px;
+    qproperty-alignment: AlignCenter;
+}
