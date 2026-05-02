@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>404</width>
+    <width>430</width>
     <height>600</height>
    </rect>
   </property>
@@ -20,8 +20,8 @@
    <string notr="true">Cassette</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="media-tape">
-    <normaloff>.</normaloff>.</iconset>
+   <iconset resource="res.qrc">
+    <normaloff>:/icons/tape</normaloff>:/icons/tape</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -74,6 +74,9 @@
           <property name="rightMargin">
            <number>0</number>
           </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QSlider" name="s_progress">
             <property name="orientation">
@@ -90,6 +93,9 @@
              </sizepolicy>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>4</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -105,11 +111,17 @@
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset theme="media-playlist-repeat">
-                 <normaloff>.</normaloff>.</iconset>
+                <iconset resource="res.qrc">
+                 <normaloff>:/icons/no-repeat</normaloff>:/icons/no-repeat</iconset>
                </property>
-               <property name="checkable">
-                <bool>true</bool>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="shortcut">
+                <string>L</string>
                </property>
               </widget>
              </item>
@@ -123,7 +135,7 @@
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>40</width>
+                 <width>5</width>
                  <height>20</height>
                 </size>
                </property>
@@ -135,8 +147,17 @@
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset theme="media-skip-backward">
-                 <normaloff>.</normaloff>.</iconset>
+                <iconset resource="res.qrc">
+                 <normaloff>:/icons/previous</normaloff>:/icons/previous</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>20</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="shortcut">
+                <string>P</string>
                </property>
               </widget>
              </item>
@@ -149,8 +170,14 @@
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset theme="media-playback-stop">
-                 <normaloff>.</normaloff>.</iconset>
+                <iconset resource="res.qrc">
+                 <normaloff>:/icons/stop</normaloff>:/icons/stop</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -160,11 +187,17 @@
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset theme="media-playback-start">
-                 <normaloff>.</normaloff>.</iconset>
+                <iconset resource="res.qrc">
+                 <normaloff>:/icons/play</normaloff>:/icons/play</iconset>
                </property>
-               <property name="checkable">
-                <bool>false</bool>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="shortcut">
+                <string>Space</string>
                </property>
                <property name="default">
                 <bool>false</bool>
@@ -177,8 +210,17 @@
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset theme="media-skip-forward">
-                 <normaloff>.</normaloff>.</iconset>
+                <iconset resource="res.qrc">
+                 <normaloff>:/icons/next</normaloff>:/icons/next</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="shortcut">
+                <string>N</string>
                </property>
               </widget>
              </item>
@@ -203,8 +245,17 @@
                    <string notr="true"/>
                   </property>
                   <property name="icon">
-                   <iconset theme="audio-volume-medium">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset resource="res.qrc">
+                    <normaloff>:/icons/volume-medium</normaloff>:/icons/volume-medium</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                  <property name="shortcut">
+                   <string>M</string>
                   </property>
                   <property name="checkable">
                    <bool>true</bool>
@@ -317,7 +368,14 @@
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset theme="help-about"/>
+                <iconset resource="res.qrc">
+                 <normaloff>:/icons/about</normaloff>:/icons/about</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -327,7 +385,14 @@
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset theme="user-available"/>
+                <iconset resource="res.qrc">
+                 <normaloff>:/icons/notify</normaloff>:/icons/notify</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -350,8 +415,14 @@
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset theme="list-add">
-                 <normaloff>.</normaloff>.</iconset>
+                <iconset resource="res.qrc">
+                 <normaloff>:/icons/add</normaloff>:/icons/add</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -361,8 +432,14 @@
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset theme="list-remove">
-                 <normaloff>.</normaloff>.</iconset>
+                <iconset resource="res.qrc">
+                 <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -378,6 +455,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>

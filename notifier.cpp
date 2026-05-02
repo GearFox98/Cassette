@@ -24,7 +24,7 @@ void Notifier::notify(const QString &title, const QString &artist) {
 
     QString appName = QStringLiteral("Cassette");
     uint replacesId = 0;
-    QString appIcon = "media-tape";
+    QString appIcon = "archie-cassette";
     QString summary = tr("Now playing...");
     QStringList actions;
     QVariantMap hints;

@@ -31,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent, bool agent)
 
     // --- Set notifier ---
     notifier = new Notifier(this);
-    ui->btn_notify->setIcon(QIcon::fromTheme(canNotify ? "user-available" : "user-offline"));
 
     // --- Set agent ---
     this->agent = agent;
@@ -41,9 +40,6 @@ MainWindow::MainWindow(QWidget *parent, bool agent)
     output = new QAudioOutput(this);
     player->setAudioOutput(output);
     ui->s_progress->setEnabled(false);
-
-    // --- Load settings ---
-    loadSettings();
 
     // --- Playlist ---
     playlist = new Playlist(this);
@@ -70,7 +66,11 @@ MainWindow::MainWindow(QWidget *parent, bool agent)
     // --- Player → auto-advance on track end ---
     connect(player, &QMediaPlayer::mediaStatusChanged, this, [this](QMediaPlayer::MediaStatus status) {
         if (status == QMediaPlayer::EndOfMedia) {
-            next();
+            if (m_loopMode == Mode::LOOP_LIST) {
+                next();
+            } else if (m_loopMode == Mode::NORMAL) {
+                (playlist->currentIndex() < playlist->size() - 1) ? next() : stop();
+            }
 
             // Notify if visible and enabled
             if (canNotify && this->isMinimized()) {
@@ -110,7 +110,7 @@ MainWindow::MainWindow(QWidget *parent, bool agent)
     // Mute toggle button
     connect(ui->btn_volume, &QPushButton::toggled, this, [this](bool /*checked*/){
         if (ui->btn_volume->isChecked()) {
-            ui->btn_volume->setIcon(QIcon::fromTheme("audio-volume-muted"));
+            ui->btn_volume->setIcon(QIcon(":/icons/mute"));
             ui->s_volume->setEnabled(false);
             output->setVolume(0.0);
         } else {
@@ -129,7 +129,7 @@ MainWindow::MainWindow(QWidget *parent, bool agent)
             playing = true;
             ui->s_progress->setEnabled(true);
             updateTrackInfo();
-            ui->btn_play->setIcon(QIcon::fromTheme("media-playback-pause"));
+            ui->btn_play->setIcon(QIcon(":/icons/pause"));
         }
     });
 
@@ -139,8 +139,8 @@ MainWindow::MainWindow(QWidget *parent, bool agent)
     connect(ui->s_progress, &QSlider::sliderPressed, this, &MainWindow::onSliderPressed);
     connect(ui->s_progress, &QSlider::sliderReleased, this, &MainWindow::onSliderReleased);
 
-    // --- Volume initialization ---
-    this->set_volume();
+    // --- Load settings ---
+    loadSettings();
 
     // --- Dark theme ---
     QFile file(":/styles/dark.qss");
@@ -204,7 +204,7 @@ void MainWindow::play()
     if (playing) {
         player->pause();
         playing = false;
-        ui->btn_play->setIcon(QIcon::fromTheme("media-playback-start"));
+        ui->btn_play->setIcon(QIcon(":/icons/play"));
     } else {
         // Re‑load source if the player was stopped
         if (player->playbackState() == QMediaPlayer::StoppedState) {
@@ -214,7 +214,7 @@ void MainWindow::play()
         playing = true;
         ui->s_progress->setEnabled(true);
         updateTrackInfo();
-        ui->btn_play->setIcon(QIcon::fromTheme("media-playback-pause"));
+        ui->btn_play->setIcon(QIcon(":/icons/pause"));
     }
 }
 
@@ -223,8 +223,9 @@ void MainWindow::stop()
     player->stop();
     playing = false;
     ui->s_progress->setEnabled(false);
+    ui->s_progress->setValue(0);
     ui->lb_info->setText("-");
-    ui->btn_play->setIcon(QIcon::fromTheme("media-playback-start"));
+    ui->btn_play->setIcon(QIcon(":/icons/play"));
 }
 
 void MainWindow::next()
@@ -235,7 +236,7 @@ void MainWindow::next()
         player->play();
         playing = true;
         updateTrackInfo();
-        ui->btn_play->setIcon(QIcon::fromTheme("media-playback-pause"));
+        ui->btn_play->setIcon(QIcon(":/icons/pause"));
     }
 }
 
@@ -247,7 +248,7 @@ void MainWindow::previous()
         player->play();
         playing = true;
         updateTrackInfo();
-        ui->btn_play->setIcon(QIcon::fromTheme("media-playback-pause"));
+        ui->btn_play->setIcon(QIcon(":/icons/pause"));
     }
 }
 
@@ -261,13 +262,13 @@ void MainWindow::set_volume()
     output->setVolume(vol / 100.0);
 
     if (vol == 0) {
-        ui->btn_volume->setIcon(QIcon::fromTheme("audio-volume-muted"));
+        ui->btn_volume->setIcon(QIcon(":/icons/mute"));
     } else if (vol > 0 && vol <= 30) {
-        ui->btn_volume->setIcon(QIcon::fromTheme("audio-volume-low"));
+        ui->btn_volume->setIcon(QIcon(":/icons/volume-low"));
     } else if (vol > 40 && vol < 70) {
-        ui->btn_volume->setIcon(QIcon::fromTheme("audio-volume-medium"));
+        ui->btn_volume->setIcon(QIcon(":/icons/volume-medium"));
     } else if (vol > 70) {
-        ui->btn_volume->setIcon(QIcon::fromTheme("audio-volume-high"));
+        ui->btn_volume->setIcon(QIcon(":/icons/volume-high"));
     }
 }
 
@@ -277,10 +278,17 @@ void MainWindow::set_volume()
 
 void MainWindow::repeat()
 {
-    if (ui->btn_repeat_mode->isChecked()) {
+    if (m_loopMode == Mode::NORMAL) {
+        m_loopMode = Mode::LOOP_LIST;
+        ui->btn_repeat_mode->setIcon(QIcon(":/icons/repeat-all"));
+    } else if (m_loopMode == Mode::LOOP_LIST) {
+        m_loopMode = Mode::LOOP_TRACK;
         player->setLoops(QMediaPlayer::Infinite);
-    } else {
+        ui->btn_repeat_mode->setIcon(QIcon(":/icons/repeat-one"));
+    } else if (m_loopMode == Mode::LOOP_TRACK) {
+        m_loopMode = Mode::NORMAL;
         player->setLoops(1);
+        ui->btn_repeat_mode->setIcon(QIcon(":/icons/no-repeat"));
     }
 }
 
@@ -461,7 +469,7 @@ void MainWindow::processCommand(const QByteArray &message)
 // ──────────────────────────────────────────────────────
 void MainWindow::toggle_notification() {
     canNotify = !canNotify;
-    ui->btn_notify->setIcon(QIcon::fromTheme(canNotify ? "user-available" : "user-offline"));
+    ui->btn_notify->setIcon(QIcon(canNotify ? ":/icons/notify" : ":/icons/no-notify"));
 }
 
 // ──────────────────────────────────────────────────────
@@ -473,6 +481,22 @@ void MainWindow::loadSettings()
     QSettings settings;
     canNotify = settings.value("notifications", true).toBool();
     ui->s_volume->setValue(settings.value("volume", 50).toInt());
+    m_loopMode = settings.value("repeat", Mode::NORMAL).toInt();
+
+    // Update GUI
+    ui->btn_notify->setIcon(QIcon(canNotify ? ":/icons/notify" : ":/icons/no-notify"));
+    set_volume();
+    switch (m_loopMode) {
+    case Mode::NORMAL:
+        ui->btn_repeat_mode->setIcon(QIcon(":/icons/no-repeat"));
+        break;
+    case Mode::LOOP_TRACK:
+        ui->btn_repeat_mode->setIcon(QIcon(":/icons/repeat-one"));
+        break;
+    case Mode::LOOP_LIST:
+        ui->btn_repeat_mode->setIcon(QIcon(":/icons/repeat-all"));
+        break;
+    }
 }
 
 void MainWindow::saveSettings()
@@ -480,6 +504,7 @@ void MainWindow::saveSettings()
     QSettings settings;
     settings.setValue("notifications", canNotify);
     settings.setValue("volume", ui->s_volume->value());
+    settings.setValue("repeat", m_loopMode);
 }
 
 // ──────────────────────────────────────────────────────
@@ -490,15 +515,11 @@ void MainWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::WindowStateChange) {
         if (isMinimized()) {
-            // Original condition (commented) only hid the window when the tray icon existed.
-            // Now we always hide when minimized, regardless of tray icon presence.
-            // if (m_trayIcon) {
             if(agent){
                 this->hide();
                 event->ignore();
                 return;
             }
-            // }
         }
     }
     QMainWindow::changeEvent(event);

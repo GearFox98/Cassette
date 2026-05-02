@@ -72,6 +72,13 @@ private:
 
     Playlist *playlist;
 
+    int m_loopMode = 0;
+    enum Mode {
+        NORMAL,
+        LOOP_LIST,
+        LOOP_TRACK
+    };
+
     bool playing = false;
     bool m_userDraggingSlider = false;
 

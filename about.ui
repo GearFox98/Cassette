@@ -26,7 +26,8 @@
    <string>About</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="media-tape"/>
+   <iconset resource="res.qrc">
+    <normaloff>:/icons/tape</normaloff>:/icons/tape</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -100,6 +101,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="AppVer">
+         <property name="text">
+          <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;v1.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -144,9 +152,9 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="AppVer">
+        <widget class="QLabel" name="lbLicence">
          <property name="text">
-          <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;v1.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string notr="true">GNU/GPLv3</string>
          </property>
         </widget>
        </item>
@@ -220,6 +228,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections/>
 </ui>

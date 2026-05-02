@@ -6,4 +6,24 @@
         <file alias="cassette_es_ES.qm">translations/cassette_es_ES.qm</file>
         <file>translations/cassette_es_LATAM.qm</file>
     </qresource>
+    <qresource prefix="/icons">
+        <file alias="repeat-one">icons/media-repeat-track-amarok.svg</file>
+        <file alias="no-repeat">icons/media-repeat-none.svg</file>
+        <file alias="repeat-all">icons/media-playlist-repeat.svg</file>
+        <file alias="stop">icons/media-playback-stop.svg</file>
+        <file alias="play">icons/media-playback-start.svg</file>
+        <file alias="pause">icons/media-playback-pause.svg</file>
+        <file alias="remove">icons/list-remove.svg</file>
+        <file alias="add">icons/list-add.svg</file>
+        <file alias="about">icons/help-about.svg</file>
+        <file alias="notify">icons/dialog-messages.svg</file>
+        <file alias="no-notify">icons/dialog-messages-inactive.svg</file>
+        <file alias="mute">icons/audio-volume-muted.svg</file>
+        <file alias="volume-medium">icons/audio-volume-medium.svg</file>
+        <file alias="volume-low">icons/audio-volume-low.svg</file>
+        <file alias="volume-high">icons/audio-volume-high.svg</file>
+        <file alias="next">icons/media-skip-forward.svg</file>
+        <file alias="previous">icons/media-skip-backward.svg</file>
+        <file alias="tape">icons/media-tape.svg</file>
+    </qresource>
 </RCC>
