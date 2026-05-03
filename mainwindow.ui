@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="res.qrc">
-    <normaloff>:/icons/tape</normaloff>:/icons/tape</iconset>
+    <normaloff>:/icons/cassette</normaloff>:/icons/cassette</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>

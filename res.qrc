@@ -25,5 +25,6 @@
         <file alias="next">icons/media-skip-forward.svg</file>
         <file alias="previous">icons/media-skip-backward.svg</file>
         <file alias="tape">icons/media-tape.svg</file>
+        <file alias="cassette">icons/archie-cassette.svg</file>
     </qresource>
 </RCC>
